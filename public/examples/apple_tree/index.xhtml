@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:svg="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	
+	<title>PottisJS tutorial</title>
+
+	<script type="text/ecmascript" src="../../pottis.js"></script>
+
+	<script type="text/ecmascript"> <![CDATA[
+	
+		var pottis = null;
+		var app = {
+			apples: 0
+		};
+		
+		window.onload = function() {
+			var svg = document.getElementById("tutorial");
+						
+			pottis = new Pottis(svg, start);
+			pottis.importSVG("apple.svg", "apple");
+			pottis.importSVG("tree.svg", "tree");
+			pottis.importSVG("basket.svg", "basket");
+			pottis.importSVG("butterfly.svg", "butterfly");
+			
+			var tree = pottis.use("tree", "appletree", 400, 30);
+		}
+
+		function start() {
+			var basket = pottis.use("basket", "basket", 100, 390);
+			pottis.scale(basket, 0.8);
+			pottis.addDrop(basket, droppedToBasket);
+			
+			generateApples(10);
+		}
+		
+		function droppedToBasket(receiver, dropped) {
+			pottis.remove(dropped);
+			pottis.scaleAdd(receiver, 0.1);
+			app.apples += 1;
+			
+			
+			if ( app.apples == 3 ) {
+				var butterfly = pottis.use("butterfly", "butterfly");
+				pottis.scale(butterfly, 0.5);
+				pottis.addScale(butterfly);
+			}
+		}
+		
+		function generateApples(amount) {
+			for (var i=0; i < amount; i++) {
+				var x = pottis.randomInt(400)+400;
+				var y = pottis.randomInt(140)+40;
+				
+				var apple = pottis.use("apple", "apple_"+i, x, y, 0, 0);
+				pottis.scale(apple, 0.2, 0.2, 0, 0);
+				pottis.addDrag(apple);
+			}
+		}
+	
+		
+	]]> </script>
+
+</head>
+
+<body>
+    
+	<h1>PottisJS example: Apple Tree</h1>
+	
+	<p>Pick 3 apples into that basket! Click the SVG area to start!</p>
+	
+	<svg style="border: 1px solid #000" id="tutorial" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="900" height="600" />
+	
+</body>
+</html>

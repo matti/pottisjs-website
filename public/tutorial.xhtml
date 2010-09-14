@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:svg="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	
+	<title>PottisJS tutorial</title>
+
+	<script type="text/ecmascript" src="pottis.js"></script>
+
+	<script type="text/ecmascript"> <![CDATA[
+	
+		var pottis = null;
+		
+		window.onload = function() {
+			var svg = document.getElementById("tutorial");
+			
+			pottis = new Pottis(svg);
+			pottis.importSVG("apple.svg", "apple");
+	
+			var apple = pottis.use("apple", "first_apple", 100, 100);
+			
+			pottis.addClick(apple, appleClicked);
+			pottis.addDrag(apple);
+		}
+		
+		function appleClicked(e) {
+			pottis.rotateAdd(this, 45);
+			pottis.scale(this, 0.5);
+		}
+		
+	]]> </script>
+
+</head>
+
+<body>
+    
+	<h1>PottisJS tutorial</h1>
+	
+	<p>Click and drag that apple!</p>
+	
+	<svg id="tutorial" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="900" height="600" />
+	
+</body>
+</html>

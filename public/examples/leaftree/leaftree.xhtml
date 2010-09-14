@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Leafs falling from a tree</title>
+
+	<script type="text/ecmascript" src="../../pottis.js"></script>
+
+	<script type="text/ecmascript"> <![CDATA[
+		var pottis = null;
+		var leafstash = [];
+		var leafcounter = 0;
+
+		window.onload = function() {
+			var svg = document.getElementById("playground");
+			pottis = new Pottis(svg);
+
+			pottis.importSVG("1195427467858604967PeterM_Tree.svg", "tree");
+			pottis.importSVG("1194984720884646590fall_coloured_leaf_geral_01.svg", "leaf1");
+			pottis.importSVG("1194984721901638187fall_coloured_leaf_geral_02.svg", "leaf2");
+			pottis.importSVG("1195445505805723527liftarn_Four_leaf_clover.svg", "clover");
+			
+			var tree = pottis.use("tree");
+			pottis.addClick(tree, addLeaf);			
+		}
+		
+		function addLeaf(e) {
+			// treebc = tree.getBoundingClientRect();
+			// x = treebc.left + pottis.randomInt(treebc.right - treebc.left);
+			// y = treebc.top + pottis.randomInt(treebc.bottom - treebc.top);
+			
+			var x = 50 + pottis.randomInt(580);
+			var y = 160 + pottis.randomInt(400);
+
+			var leafid = "leaf" + (pottis.randomInt(2) + 1);
+			if (pottis.randomInt(20) == 0) leafid = "clover";
+			var leaf = pottis.use(leafid, null, x, y);
+			leafstash.push(leaf);
+			
+			var leafscale = 0.3 + Math.random() * 0.2;
+			pottis.scale(leaf, leafscale, leafscale, 0, 0);
+			pottis.rotate(leaf, pottis.randomInt(360));
+
+			if (leafid == "clover") pottis.addClick(leaf, cloverFound);
+		}
+		
+		function cloverFound(e) {
+			while (leafstash.length > 0)
+				pottis.remove(leafstash.pop());
+		}
+		
+	]]> </script>
+	
+	<style type="text/css">
+		#playground {
+			width: 100%;
+			height: 1000px;
+			position: absolute;
+			top: -80px;
+			left: 0px;
+		}
+		
+		p { width: 222px; }
+	</style>
+
+</head>
+
+<body>
+	
+	<h1>The Clover Game</h1>
+	<p>Try to find the clover from the tree before rendering gets too slow!</p>
+
+	<svg id="playground" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+	
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:svg="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xml:lang="en" lang="en">
+
+	<head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>PottisJS - JavaScript Library</title>
+
+		<script type="text/javascript" src="shjs/sh_main.min.js"></script>
+		<script type="text/javascript" src="shjs/sh_javascript.min.js"></script>
+		<link type="text/css" rel="stylesheet" href="shjs/sh_eclipse.css" />		
+		
+		<style>
+
+			body {
+				font-family: "Helvetica", "Arial", sans-serif;
+			}
+			
+			h2 {
+				margin-top: 1.5em;
+				border-bottom: 1px solid #000;
+			}
+
+			div#apiDocumentation > h3 {
+				margin-top: 3em;
+				margin-bottom: 0em;
+				border-bottom: 1px dashed #000;
+			}
+
+			div#apiDocumentation > h4 {
+				margin-top: 1em;
+				margin-bottom: 0em;
+			} 
+
+			pre.sh_javascript {
+				border: 1px solid #000;
+				padding: 1em;
+			}
+
+		</style>
+	</head>
+
+	<body onload="sh_highlightDocument();">
+		<h1 style="margin-left: 0.5em; margin-bottom: 0em"><img src="images/logo.png" alt="PottisJS" /></h1>
+		
+		<p style="margin-left: 3.5em; margin-top: -0.4em;">A JavaScript library for interacting with SVG.</p>
+		
+		<h2>Why?</h2>
+		
+		<ul>
+			<li>Great for rapid prototyping.</li>
+		 	<li>Made for a workshop at the <a href="http://svgopen.org/2009">SVG Open 2009</a>.</li>
+			<li>It's extremely simple, does not try to hide SVG behind it.</li>
+			<li>Even though it's <em>unfinished</em>, it has a lot of hidden information on scripting SVG.</li>
+			<li>Inspired by above, it has been an insightful research project of <a href="http://cs.helsinki.fi/group/kuje/">Kuje Research Group</a>.</li>
+			<li>jQuery <a href="http://dev.jqueryui.com/ticket/4211">does not support SVG</a>.</li>
+			<li>It's <em>fun</em> to <em>do</em> stuff.</li>
+		</ul>
+		
+		
+		<h2>Getting started</h2>
+		
+		<h3>Download</h3>
+		
+		<p>You need 3 files to get started:</p>
+		
+		<ol>
+			<li><a href="pottis.js">pottis.js</a> library (0.0.2)</li>
+			<li><a href="tutorial.xhtml">tutorial.xhtml</a> XHTML template</li>
+			<li><a href="apple.svg">apple.svg</a> SVG image of an apple.</li>
+		</ol>
+		
+		<p>You can also get it from the GitHub: <a href="http://github.com/matti/PottisJS">PottisJS at GitHub.</a> (patches welcome!)</p>
+		
+		<p>PottisJS works with Firefox (3.5) and Safari (4.0). Sorry Opera!</p>
+
+		<h2>Examples</h2>
+		
+		<ul>
+			<li><a href="examples/shapes/index.xhtml">Shapes</a></li>
+			<li><a href="examples/apple_tree/index.xhtml">Apple tree</a></li>
+			<li><a href="examples/apple_tree_2/index.xhtml">Apple tree improved</a></li>
+			<li><a href="examples/leaftree/leaftree.xhtml">Leaf tree</a></li>
+			<li><a href="examples/leaftree/leaftree_animated.xhtml">Leaf tree with animation</a></li>
+			<li><a href="examples/longcat/index.xhtml">Longcat with scaling and rotating</a></li>
+			<li><a href="examples/apple_scene/Apple_Tree.svg">Stand-alone SVG apple scene</a></li>
+			<li><a href="examples/canvas_import/index.xhtml">Importing HTML5 Canvas</a></li>
+			<li><a href="examples/images/">Dragging images</a></li>
+		</ul>
+
+
+		<h3>Thanks for the images!</h3>
+		
+		<ul>
+			<li><a href="http://www.clker.com/clipart-10646.html">The Basket</a> has been used many times here.</li>
+			<li><a href="http://www.clker.com/clipart-2536.html">Fall</a> <a href="http://www.clker.com/clipart-2537.html">leaves</a>, a <a href="http://www.clker.com/clipart-12368.html">clover</a> and a <a href="http://www.clker.com/clipart-10381.html">tree</a>.</li>
+			<li><a href="http://openclipart.org/media/files/sutrannu/12208">Apple tree scene</a>.</li>
+			<li>The massive <a href="examples/longcat/cat.svg">longcat</a> was vectorized according to <a href="http://encyclopediadramatica.com/Longcat">Encyclopedia Dramatica</a>.</li>
+			<li>We're also using the <a href="http://commons.wikimedia.org/wiki/File:Butterfly.svg">SVG butterfly</a>!</li>
+		</ul>
+		
+		<h3>What else?</h3>
+		
+		<p>In order to <em>really</em> do interactive stuff, animation is clearly needed, as seen on the <a href="http://svgopen.org/2009/registration.php?section=workshops#User_interface_prototype_to_SVG_web_app_with_rapid_prototyping">SVG Open 2009 workshop</a>. Three of the four teams there included some (JavaScript) animation in their prototype. That's something to wait for in PottisJS 2.0 :)</p>
+		
+
+		<div id="apiDocumentation">
+			<h2>API Documentation</h2>
+
+			<ul>
+				<li><a href="#loading">Loading Pottis</a></li>
+				<li><a href="#behaviour">Behaviour</a></li>
+				<li><a href="#manipulation">Manipulation</a></li>
+				<li><a href="#transformations">Transformations</a></li>
+				<li><a href="#adding_elements">Adding elements</a></li>
+				<li><a href="#utilities">Utilities</a>
+			</ul>
+			
+			<h3 id="loading">Loading</h3>
+
+			<h4 id="newpottis">new Pottis(targetSVG, [clickCallback]) → PottisInstance</h4>
+			<p>Initialize a new PottisJS library for <em>targetSVG</em> SVG element. If <em>callback</em> is given, callback(e) is called on the first click onto the <em>targetSVG</em> element. This is because some things don't work until all the external SVG files imported with <a href="#importsvg">importSVG</a> have completely loaded, waiting for the mouse click gives them time to load.</p>
+
+<pre class="sh_javascript">
+var svg = document.getElementById("tutorial");
+var pottis = new Pottis(svg);
+
+&lt;svg id="tutorial" version="1.1" width="900" height="600"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink" /&gt;
+</pre>
+
+			<h3 id="behaviour">Behaviour</h3>
+
+			<h4>addClick(element, callback) → null</h4>
+			<p>When element is clicked, callback(event) is fired.</p>
+
+			<h4>addDoubleClick(element, callback) → null</h4>
+			<p>When element is double-clicked, callback(event) is fired.</p>
+
+			<h4>addDrag(element, [targetElement], [callback]) → null</h4>
+			<p>Make element draggable.  If targetElement is given, then element works as a handle for dragging the targetElement.</p>
+
+<pre class="sh_javascript">
+// Draggable apple
+pottis.addDrag(apple);
+
+// Group moves when the basket is dragged.
+var basketAndApples = pottis.group("basket_apples", [basket, green_apple, red_apple])
+pottis.addDrag(basket, basketAndApples);
+</pre>
+		
+			<h4>addDrop(receiverElement, callback) → null</h4>
+			<p>Make receiverElement droppable.  Dropping draggables (made with addDrag) into receiverElement fires callback(receiver, dropped).</p>
+		
+<pre class="sh_javascript">
+pottis.addDrop(basket, insertAppleIntoBasket);
+</pre>
+
+			<h4>addMouseOut(element, callback) → null</h4>
+			<p>When mouse leaves the element, callback(event) will be fired.</p>
+
+			<h4>addMouseOver(element, callback) → null</h4>
+			<p>When mouse hovers over element, callback(event) will be fired.</p>
+			
+			<h4>addRightClick(element, callback) → null</h4>
+			<p>When element is right-clicked, callback(event) will be fired.</p>
+		
+			<h4>addRotate(element, [targetElement], [callback]) → null</h4>
+			<p>Element will rotate when dragged.  If targetElement is given, then element works as handle for rotating the targetElement.</p>
+
+<pre class="sh_javascript">
+// Element will rotate when dragged
+pottis.addRotate(apple);
+
+// Dragging basket will rotate apples
+var apples = pottis.group("apples", [green_apple, red_apple])
+pottis.addRotate(basket, apples);
+</pre>
+			<h4>addScale(element, [targetElement], [callback]) → null</h4>
+			<p>Element will be scaled when dragged.  If targetElement is given, then element works as a handle for scaling.</p>
+<pre class="sh_javascript">
+// Element will scale when dragged
+pottis.addScale(apple);
+
+// Dragging basket will scale a group
+var basketAndApples = pottis.group("basket_apples", [basket, green_apple, red_apple])
+pottis.addScale(basket, basketAndApples;
+</pre>
+
+			<h4>removeDrag(element) → null</h4>
+			<p>Removes drag from an element</p>
+		
+			<h3 id="manipulation">Manipulation</h3>
+
+			<h4>group(groupId, elements) → SVGGroupElement</h4>
+			<p>Groups elements (array) into svg group element.</p>
+			
+<pre class="sh_javascript">
+var basketAndApples = pottis.group("basket_apples", [basket, green_apple, red_apple]);
+</pre>
+
+			<h4>hide(element) → null</h4>
+			<p>Hides element. See <em>show</em>.</p>
+			
+			<h4>moveAbove(element, peerElement) → null</h4>
+			<p>Moves element above the peerElement in rendering order.</p>
+
+			<h4>moveBelow(element, peerElement) → null</h4>
+			<p>Moves element below the peerElement in rendering order.</p>
+
+			<h4>moveToBack(element) → null</h4>
+			<p>Moves element to the bottom of all other elements in rendering order.</p>
+			
+			<h4>moveToFront(element) → null</h4>
+			<p>Moves element to the top of all other elements in rendering order.</p>
+			
+			<h4>remove(element) → null</h4>
+			<p>Removes element from the DOM.</p>
+			
+			<h4>show(element) → null</h4>
+			<p>Shows element. See <em>hide</em>.</p>
+
+
+			<h3 id="transformations">Transformations</h3>
+
+			<h4>rotate(element, angle, [cx], [cx]) → null</h4>
+			<p>Rotate an element by <em>angle</em> (originally 0).  By default, rotates relatively to element center. This can be changed with <em>cx</em> and <em>cy</em>, which specify the center point for rotate, relative to element top-left.</p>
+
+			<h4>rotateAdd(element, angleToAdd, [centerX], [centerY]) → newAngle (integer)</h4>
+			<p>Increment element rotation by <em>angleToAdd</em>. Returns new new rotation angle.</p>
+			
+			<h4>scale(element, sx, [sy], [cx], [cy]) → null</h4>
+			<p>Scale an element by <em>sx</em> and <em>sy</em> (originally 1 and 1). If <em>sy</em> is not specified, it's the same as <em>sx</em>.  By default, scales relatively to element center. This can be changed with <em>cx</em> and <em>cy</em>, which specify the center point for scale, relative to element top-left.</p>
+				
+			<h4>scaleAdd(element, sx, [sy]) → { sx: integer, sy: integer }</h4>
+			<p>Increment element scale. Returns the new scale.</p>
+
+			<h4>translate(element, [tx=0], [ty=0]) → null</h4>
+			<p>Translate an element.</p>
+			
+			<h4>translateAdd(element, dx, [dy]) → { x: integer, y: integer }</h4>
+			<p>Add to existing translation of an element. Values can be negative. Returns the new translation.</p>
+
+
+			<h3 id="adding_elements">Adding elements</h3>
+
+			<h4>image(url, [imageId], [x=0], [y=0]) → SVGImageElement</h4>
+			<p>Creates SVGImageElement with <em>url</em> as the source.</p>
+
+<pre class="sh_javascript">
+pottis.image("http://images.encyclopediadramatica.com/images/3/34/Longcat_buildings.jpg", "longcat_buildings");
+</pre>
+					
+			<h4 id="importsvg">importSVG(SVGFileName, groupId) → null</h4>
+			<p>Imports external SVG to the DOM and wraps import in a group <em>groupId</em>. Quite experimental!</p>
+			
+			<ul>
+				<li>might not work with complex SVG files</li>
+				<li>the id's will collade, if different SVG files share same id's</li>
+				<li>the document doesn't complete loading after using importSVG, although it in reality has loaded</li>
+				<li>not all functions for the imported SVG's work unitl they have completely loaded; see <a href="#newpottis">new Pottis</a></li>
+			</ul>
+
+<pre class="sh_javascript">
+pottis.importSVG("apple.svg", "apple");
+pottis.use("apple", "fresh_apple");
+</pre>
+
+			<h4>shape(element, attributes) → SVGElement</h4>
+			<p>Inserts a new shape into the SVG DOM. <em>element</em> can be any valid SVG element. See <a href="http://www.w3.org/TR/SVG11/shapes.html">W3C specification for attributes</a>.</p>
+			
+<pre class="sh_javascript">
+pottis.shape("rect", { x: 10, y: 10, width: 200, height: 100, fill: "blue" });
+</pre>
+
+			<h4>text(textContent, [textId], [x=0], [y=0]) → SVGTextElement</h4>
+			<p>Creates SVGTextElement with <em>textContent</em> as the text content.</p>
+
+<pre class="sh_javascript">
+pottis.text("Thanks for using PottisJS!", null, 200, 100);
+</pre>
+
+			<h4>use(defId, useId, x, y) → SVGUseElement</h4>
+			<p>Inserts an SVG use element into the SVG DOM. The use element references to a defs element with id <em>defId</em>.</p>
+
+<pre class="sh_javascript">
+pottis.use("apple", "another_fresh_apple");
+</pre>
+
+			
+			<h3 id="utilities">Utilities</h3>
+
+			<h4>getMouseCoords(event, parentElement) → { x: integer, y: integer }</h4>
+			<p>Returns mouse coordinates inside of the parent element.</p>
+			
+			<h4>randomInt(maxValue) → integer</h4>
+			<p>Retuns a random integer between [0, maxValue-1].</p>
+
+<pre class="sh_javascript">
+// Plots element in x: [0,499], y: [100,399]
+pottis.use("apple", "red_apple", pottis.randomInt(500), pottis.randomInt(300)+100);
+</pre>
+			
+		</div>
+	<script type="text/javascript">
+	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+	document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+	<script type="text/javascript">
+	try {
+	var pageTracker = _gat._getTracker("UA-10376219-2");
+	pageTracker._trackPageview();
+	} catch(err) {}</script>		
+	</body>
+
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Leafs falling from a tree</title>
+
+	<script type="text/ecmascript" src="../../pottis.js"></script>
+
+	<script type="text/ecmascript"> <![CDATA[
+		var pottis = null;
+		var leafstash = [];
+		var leafcounter = 0;
+
+		window.onload = function() {
+			var svg = document.getElementById("playground");
+			pottis = new Pottis(svg);
+
+			pottis.importSVG("1195427467858604967PeterM_Tree.svg", "tree");
+			pottis.importSVG("1194984720884646590fall_coloured_leaf_geral_01.svg", "leaf1");
+			pottis.importSVG("1194984721901638187fall_coloured_leaf_geral_02.svg", "leaf2");
+			pottis.importSVG("1195445505805723527liftarn_Four_leaf_clover.svg", "clover");
+			
+			var tree = pottis.use("tree");
+			pottis.addClick(tree, addLeaf);			
+		}
+		
+		function addLeaf(e) {
+			// treebc = tree.getBoundingClientRect();
+			// x = treebc.left + pottis.randomInt(treebc.right - treebc.left);
+			// y = treebc.top + pottis.randomInt(treebc.bottom - treebc.top);
+			
+			var x = 50 + pottis.randomInt(580);
+			var y = 160 + pottis.randomInt(400);
+
+			var leafid = "leaf" + (pottis.randomInt(2) + 1);
+			if (pottis.randomInt(20) == 0) leafid = "clover";
+			var leaf = pottis.use(leafid, null, x, y);
+			leafstash.push(leaf);
+			
+			var leafscale = 0.3 + Math.random() * 0.2;
+			pottis.scale(leaf, leafscale, leafscale, 0, 0);
+			pottis.rotate(leaf, pottis.randomInt(360));
+
+			if (leafid == "clover") pottis.addClick(leaf, cloverFound);
+		}
+		
+		function cloverFound(e) {
+			// sorry but no animation in PottisJS :/
+			setInterval(fallingLeaves, 1);
+		}
+		
+		function fallingLeaves() {
+			leafcounter = (leafcounter + 1) % leafstash.length;
+			var leaf = leafstash[leafcounter];
+			
+			// make leaf fall down and to the right
+			var x = pottis.randomInt(5);
+			var y = pottis.randomInt(3) + 5;
+			pottis.translateAdd(leaf, x, y);
+			
+			// rotate leaf to random (but consistent) direction
+			if (!leaf._rotateSpeed)
+				leaf._rotateSpeed = pottis.randomInt(21) - 10;
+			pottis.rotateAdd(leaf, leaf._rotateSpeed);
+			
+			// remove the leaf after enought falling
+			if (!leaf._fallCounter) leaf._fallCounter = pottis.randomInt(10);
+			leaf.setAttribute("opacity", leaf._fallCounter / 10.0);
+			if (--leaf._fallCounter <= 0) pottis.remove(leaf);
+			// TODO: maybe should remove from leafstash too :o
+		}
+
+	]]> </script>
+	
+	<style type="text/css">
+		#playground {
+			width: 100%;
+			height: 1000px;
+			position: absolute;
+			top: -80px;
+			left: 0px;
+		}
+		
+		p { width: 222px; }
+	</style>
+
+</head>
+
+<body>
+	
+	<h1>The Clover Game</h1>
+	<p>Try to find the clover from the tree before rendering gets too slow!</p>
+
+	<svg id="playground" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" />
+	
+</body>
+</html>

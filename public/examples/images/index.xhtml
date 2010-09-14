@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:svg="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	
+	<title>PottisJS tutorial</title>
+
+	<script type="text/ecmascript" src="../../pottis.js"></script>
+
+	<script type="text/ecmascript"> <![CDATA[
+	
+		var pottis = null;
+			
+		window.onload = function() {
+			var svg = document.getElementById("tutorial");						
+			pottis = new Pottis(svg);
+		
+			var images = ["http://farm4.static.flickr.com/3423/3982673250_6a206edd83_m.jpg",
+						  "http://farm3.static.flickr.com/2109/2428188352_93da48a269_m.jpg",
+						  "http://farm4.static.flickr.com/3069/2990737263_bf354aeeaa_m.jpg"];
+			
+			for(var i=0; i<images.length; i++) {
+				var x = pottis.randomInt(800);
+				var y = pottis.randomInt(400);
+				
+				var image = pottis.image(images[i], "image_"+i, x, y);
+				pottis.scale(image, 0.8);
+				
+				pottis.addMouseOut(image, mouseOut);
+				pottis.addMouseOver(image, mouseOver);
+				
+				pottis.addDrag(image);
+				pottis.addClick(image, imageClicked)
+			}
+		}
+
+		function imageClicked(e) {
+			pottis.moveToFront(this);		
+		}
+		
+		function mouseOver(e) {
+			pottis.scale(e.target, 1.0);
+		}
+		
+		function mouseOut(e) {
+			pottis.scale(e.target, 0.8);
+		}
+		
+		
+	]]> </script>
+
+</head>
+
+<body>
+    
+	<h1>PottisJS example: Images</h1>
+	
+	<p>Drag images around.  Click an image to move it to front</p>
+	
+	<svg style="border: 1px solid #000" id="tutorial" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="900" height="600" />
+	
+</body>
+</html>

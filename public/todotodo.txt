@@ -1,0 +1,57 @@
+MEGALO PRE-WORKSHOP TODO
+
+TODO: tosi pieniä esimerkkejä apin mukaan
+
+päivitä api
+ - DONE: S importsveegeen lataus ei lopu
+ - DONE: S kaikki (skaalaus yms?) ei toimi ennen kuin import on valmis
+ - DONE: voiko korjata a) callback-bubblingilla b) start-konventiolla?
+ - DONE: TODO: new-pottis ei oo dokumentoitu
+ - S movetoback&front ei "tietenkään" toimi groupin sisällä
+ - TODO: addDoubleClick ei toimi jos on drag, dokkariin
+ - TODO: jos groupilla on drag, niin sisällä olevien elementtin addclickit ei toimi
+
+TODO: villi canvas image importer
+TODO: Safari??
+TODO: OPERA??
+
+
+DONE: shape: KATO PARAMETRIT W3C WEBSKASTA
+DONE: auto-shape drag
+DONE: katso api
+DONE: ei vaan toimi ilman start()
+DONE: S pottisjs.com linkit: svg scene, leaftree, longcat
+DONE: S omenapuun ja basketin voi rendata ennen start()ia
+DONE: S scene-esimerkki: omenapuumaisema
+DONE: thanx for the images: basket, tree, leaf1, leaf2, clover, longcat-buildings
+DONE: S import canvas 2nd click
+DONE: S canvas mahtuu viereen
+DONE: S click svg import
+DONE: pottis.text("text!",x,y);
+DONE: moveAbove ja moveBelow
+
+TODO: MIKÄ TÄÄ e.target vs this nyt on!!
+
+
+functiot toimii CHECKLIST +esimerkit jos toimii
+x addclick
+x adddrag
+x adddrop
+x removedrag
+x addrotate&scale
+x transformaatiot
+x importsvg (paitsi lataus ei lopu)
+x use (paitsi jos import ei oo valmis)
+x image external url
+x adddoubleclick
+	- TODO: ei toimi dragin kanssa
+
+TODO: addrightclick
+	- toimii ihan ok, mutta callbackin kutsu aiheutta NS_JVASKSOCKOSC_SODKDSAD jos callbackin sisällä on this, mutta ei jos e.target!
+
+DONE: addmouseover&out
+
+LOPPUTODO:
+
+ - julkaistaan 0.0.2
+ - mieletön hypetys

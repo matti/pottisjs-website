@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:svg="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	
+	<title>PottisJS tutorial: Canvas import</title>
+
+	<script type="text/ecmascript" src="../../pottis.js"></script>
+
+	<script type="text/ecmascript"> <![CDATA[
+	
+		var pottis = null;
+		var svg = null;
+		var canvas = null;
+		
+		window.onload = function() {
+			svg = document.getElementById("svg");
+			canvas = document.getElementById("canvas");			
+
+			pottis = new Pottis(svg);
+			
+			var canvas_draw = CanvasDraw(canvas, "rgb(200,0,0)");
+			pottis.addClick(svg, importCanvas);
+		}
+
+		function importCanvas(e) {
+			var mouse = pottis.getMouseCoords(e, svg);
+			var imported_image = pottis.image(canvas.toDataURL(), null, mouse.x, mouse.y);
+			pottis.addDrag(imported_image);
+		}
+		
+		var CanvasDraw = function(canvas, color) {
+			var _self = this;
+			var _ctx = canvas.getContext("2d");
+			
+		 	_ctx.fillStyle = color;
+			
+			canvas.onmousedown = function(e) {
+				_self.drawing = true;
+			};
+
+			canvas.onmouseup = function(e) {
+				_self.drawing = false;
+			};
+			
+			canvas.onmousemove = function(e) {
+				if ( ! _self.drawing )
+					return
+					
+				var mouse = pottis.getMouseCoords(e, this);
+				_ctx.fillRect(mouse.x, mouse.y, 20, 20);		
+
+			};
+
+		}
+	]]> </script>
+	
+	<style type="text/css">
+		#svg, #canvas {
+			border: 1px solid black;
+		}
+	</style>
+	
+</head>
+
+<body>
+    
+	<h1>PottisJS example: Canvas import</h1>
+	
+	<p>Draw to the Canvas on right, import to SVG by clicking the SVG on the left and drag the imported image!</p>
+	
+	<svg id="svg" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="400" />
+	<canvas id="canvas" width="400" height="400">NO CANVAS FOR YOU</canvas>
+	
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:svg="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	
+	<title>PottisJS tutorial</title>
+
+	<script type="text/ecmascript" src="../../pottis.js"></script>
+
+	<script type="text/ecmascript"> <![CDATA[
+	
+		var pottis = null;
+		var app = {
+			applesInBasket: []
+		};
+		
+		window.onload = function() {
+			var svg = document.getElementById("tutorial");
+						
+			pottis = new Pottis(svg, start);
+			pottis.importSVG("apple.svg", "apple");
+			pottis.importSVG("tree.svg", "tree");
+			pottis.importSVG("basket_clipped.svg", "clipped_basket");
+
+			var tree = pottis.use("tree", "appletree", 400, 30);			
+		}
+
+		function start() {			
+			var basket_back = pottis.use("basket_back", "apple_basket_back", 100, 390);
+			var basket_front = pottis.use("basket_front", "apple_basket_front", 100, 390);			
+			
+			pottis.addDrop(basket_front, droppedToBasket);
+			
+			generateApples(5);
+		}
+		
+		function droppedToBasket(apple_basket_front, dropped) {
+			app.applesInBasket.push(dropped);
+
+			var apple_basket_back = document.getElementById("apple_basket_back");
+			
+			pottis.moveBelow(dropped, apple_basket_front);
+
+			pottis.removeDrag(dropped);
+			
+			var x = pottis.randomInt(200) + 140;
+			var y = pottis.randomInt(30) + 420;
+			pottis.translate(dropped, x, y);
+			
+			if ( app.applesInBasket.length == 5 ) {
+				var applesAndBasket = [];
+				
+				// Ordering for a group
+				applesAndBasket.push(apple_basket_back);
+				for ( var i = 0; i<app.applesInBasket.length; i++ ) {
+					applesAndBasket.push(app.applesInBasket[i]);						
+				}			
+				applesAndBasket.push(apple_basket_front);
+								
+				var applesAndBasketGroup = pottis.group("apples_and_basket", applesAndBasket);
+				pottis.addDrag(applesAndBasketGroup);
+			}
+		}
+		
+		function generateApples(amount) {
+			for (var i=0; i < amount; i++) {
+				var x = pottis.randomInt(400)+400;
+				var y = pottis.randomInt(140)+40;
+				
+				var apple = pottis.use("apple", "apple_"+i, x, y, 0, 0);
+				pottis.scale(apple, 0.2, 0.2, 0, 0);
+				pottis.addDrag(apple);
+			}
+		}
+	
+		
+	]]> </script>
+
+</head>
+
+<body>
+    
+	<h1>PottisJS example: Apple Tree</h1>
+	
+	<p>Pick 5 apples into that basket!  After 5 apples, you can move the basket. Click the SVG area to start.</p>
+	
+	<svg style="border: 1px solid #000" id="tutorial" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="900" height="600" />
+	
+</body>
+</html>
